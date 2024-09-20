@@ -2,6 +2,7 @@ package com.cooltur.cooltur.domain.chat;
 
 import com.cooltur.cooltur.infra.apis.ChatGPT;
 import com.cooltur.cooltur.infra.exceptions.InvalidChatMessageError;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class Chat {
@@ -17,10 +20,10 @@ public class Chat {
     @Autowired
     private ChatGPT chatGPT;
 
-    public ChatRespuesta querry(ChatBody chatBody) {
+    public ChatReturn querry(ChatBody chatBody) {
         validate(chatBody);
         //Preguntar a chatGpt
-        return askGPT(chatBody.body());
+        return askGPT(chatBody);
     }
 
     private void validate(ChatBody chatBody) {
@@ -32,34 +35,44 @@ public class Chat {
                 .map(String::toLowerCase)
                 .toList();
         StringBuilder searchBuilder = new StringBuilder("(");
-        for(int i = 0;i  < lista.size() ; i++){
-            if(i ==  lista.size()-1) searchBuilder.append(lista.get(i));
-            else searchBuilder.append(lista.get(i)).append("|");
+        for(int i = 0;i  < palabrasEnMinusculas.size() ; i++){
+            if(i ==  palabrasEnMinusculas.size()-1) searchBuilder.append(palabrasEnMinusculas.get(i));
+            else searchBuilder.append(palabrasEnMinusculas.get(i)).append("|");
         }
         searchBuilder.append(")");
         String regex = "\\b" + searchBuilder + "\\b";
         System.out.printf("Hello and welcome!");
 
-        //if operaciones de validacion
-        // return else
-        if(!true)
+        Pattern pattern  =  Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+
+        if(matcher.find())
             throw new InvalidChatMessageError("Mensaje Inapropiado");
     }
 
-    private ChatRespuesta askGPT(String prompt) {
+    private ChatReturn askGPT(ChatBody chatBody) {
+        String prompt = chatBody.body();
+        String user = chatBody.userName();
         try {
             OkHttpClient client = new OkHttpClient();
 
-            String API_URL = "https://api.openai.com/v1/completions";
+            String API_URL = "https://api.openai.com/v1/chat/completions?";
             String apiKey = chatGPT.getChatGPTAPI();
 
             MediaType mediaType = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(mediaType,
+                    "{" +
+                            "\"model\": \"gpt-3.5-turbo\"," +
+                            "\"messages\": [" +
                             "{" +
-                                    "\"prompt\": \"" + prompt + "\"," +
-                                    "\"model\": \"gpt-3.5-turbo\", " +
-                                    "\"max_tokens\": 100" +
-                                    "}");
+                            "\"role\": \"system\", \"content\": \"You are a specialist in Mexican Culture, named CoolBot, you always like to say your name everytime you answer any question, also you like short answers so when you answer me you dont use more than 45 tokens, you are answering me, my name is " + user + " make an unique experience for me in your message.\"" +
+                            "}," +
+                            "{" +
+                            "\"role\": \"user\", \"content\": \"" + prompt + "\"" +
+                            "}" +
+                            "]," +
+                            "\"max_tokens\": 100" +
+                            "}");
 
             Request request = new Request.Builder()
                     .url(API_URL)
@@ -68,17 +81,16 @@ public class Chat {
                     .post(body)
                     .build();
 
-            System.out.println(request);
 
             Response response = client.newCall(request).execute();
 
             String responseBody = response.body().string();
-            System.out.println(responseBody);
 
-            ChatRespuesta respuesta = new ChatRespuesta(responseBody);
-            System.out.println(respuesta);
+            ObjectMapper objectMapper = new ObjectMapper();
 
-            return respuesta;
+            ChatRespuesta respuesta = objectMapper.readValue(responseBody, ChatRespuesta.class);
+            ChatReturn chatReturn = new ChatReturn(respuesta.choices().get(0).message().content());
+            return chatReturn;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

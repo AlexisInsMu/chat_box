@@ -3,6 +3,7 @@ package com.cooltur.cooltur.controller;
 import com.cooltur.cooltur.domain.chat.Chat;
 import com.cooltur.cooltur.domain.chat.ChatBody;
 import com.cooltur.cooltur.domain.chat.ChatRespuesta;
+import com.cooltur.cooltur.domain.chat.ChatReturn;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,8 @@ public class ChatController {
 
     @GetMapping
     public ResponseEntity solicitarChat(@RequestBody @Valid ChatBody body) {
-        ChatRespuesta chatRespuesta = chatServide.querry(body);
-        return ResponseEntity.ok(chatRespuesta);
+        ChatReturn chatReturn = chatServide.querry(body);
+        return ResponseEntity.ok(chatReturn);
     }
 
 }

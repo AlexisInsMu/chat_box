@@ -23,7 +23,7 @@ public class ExceptionManager {
 
     @ExceptionHandler(InvalidChatMessageError.class)
     public ResponseEntity tratarError400(InvalidChatMessageError e) {
-        return ResponseEntity.ok()
+        return ResponseEntity.badRequest()
                 .body(new ExceptionErrorFormater(e.getMessage()));
     }
 
