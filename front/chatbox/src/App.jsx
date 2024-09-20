@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import ChatBot from "react-chatbotify"
+import ChatBox from './components/ChatBox'
 import './App.css'
 
 function App() {
@@ -34,7 +35,9 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <ChatBot flow={flow}/>
+      <ChatBox/>
     </>
   )
 }
+
+export default App
