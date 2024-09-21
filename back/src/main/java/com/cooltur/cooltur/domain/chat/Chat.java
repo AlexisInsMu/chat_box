@@ -30,7 +30,7 @@ public class Chat {
         String input = chatBody.body().toLowerCase(Locale.ROOT);
 
         List<String> lista =  Arrays.asList(
-                "Tu\\s*puta\\s*madre","Hijo\\s*de\\s*puta","Hijo\\s*de\\s*perra","Puta","Zorra","Vete\\s*al\\s*(diablo|demonio)","Que\\s*te\\s*jodan","Lameculos");
+                "Tu\\s*puta\\s*madre","Hijo\\s*de\\s*puta","Hijo\\s*de\\s*perra","Put(a|o)","Zorra","Vete\\s*al\\s*(diablo|demonio|verga)","Que\\s*te\\s*jodan","Lameculos");
         List<String> palabrasEnMinusculas = lista.stream()
                 .map(String::toLowerCase)
                 .toList();

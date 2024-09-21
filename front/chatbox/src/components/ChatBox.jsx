@@ -35,7 +35,6 @@ const ChatBox = () => {
           });
           const data = await response.json();
           setApiResponse(data); // Guardar la respuesta en el estado
-          console.log("holi");
         } catch (error) {
           console.error('Error fetching data:', error);
           setErrorMessage();
@@ -55,15 +54,15 @@ const ChatBox = () => {
         {apiResponse && (
           <div className="api-response">
             <h4>Resultados de la API:</h4>
-            <pre>{JSON.stringify(apiResponse, null, 2)}</pre>
+            <pre>{apiResponse.message}</pre>
           </div>
         )}
         
         {/* Mostrar mensaje de error personalizado */}
-        {errorMessage && (
+        {apiResponse != null && 'error' in apiResponse && (
           <div className="error-message">
             <h4>Error:</h4>
-            <p>{errorMessage}</p>
+            <p>{apiResponse.error}</p>
           </div>
         )}
       </div>
