@@ -41,10 +41,6 @@ public class Chat {
         }
         searchBuilder.append(")");
         String regex = "\\b" + searchBuilder + "\\b";
-<<<<<<< HEAD
-        //System.out.printf("Hello and welcome!");
-=======
->>>>>>> refs/remotes/origin/main
 
         Pattern pattern  =  Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
