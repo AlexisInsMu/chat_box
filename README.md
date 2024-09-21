@@ -1,5 +1,5 @@
 # Mricoservicio con springboot para la implementacion de inteligencia artifical generativa Microservicio de Chat con Spring Boot
-Este proyecto es un microservicio desarrollado con Spring Boot que integra inteligencia artificial generativa para manejar interacciones de chat. Permite recibir solicitudes de chat y responder utilizando un modelo de IA.
+Este proyecto es un microservicio desarrollado con Spring Boot que integra inteligencia artificial generativa para manejar interacciones de chat. Permite recibir solicitudes de chat y responder utilizando un modelo de IA con restricciones para que unicamente acepte los temas relacionados con guias de turismo.
 
 Estructura del Proyecto
 El proyecto está estructurado de la siguiente manera:
