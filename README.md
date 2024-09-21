@@ -1,27 +1,63 @@
-# ChatBot API Cooltur
-## Descripción
-Permite la conexión y comunicación sesgada con la API de chatgpt que emula un experto en Historia de México.
+# Microservicio de Chat con Spring Boot
 
-## Tabla de contenidos
+Este proyecto es un microservicio desarrollado con Spring Boot que integra inteligencia artificial generativa para manejar interacciones de chat. Permite recibir solicitudes de chat y responder utilizando un modelo de IA con restricciones para que únicamente acepte los temas relacionados con guías de turismo.
 
-1. [Descripción](#descripción)
-3. [Endpoints](#endpoints)
-4. [Errores](#errores)
-5. [Ejemplos de Uso](#ejemplos-de-uso)
-6. [Contribución](#contribución)
-7. [Licencia](#licencia)
-8. [Contacto](#contacto)
+## Estructura del Proyecto
 
-## Endpoints
+El proyecto está estructurado de la siguiente manera:
 
-1. Método: 
-   POST
-2. URL: /chat
-3. Descripción: 
-   Se le manda un texto que proceso primero el backend, luego se manda a la API de chatgpt y se retorna la respuesta dada.
+- **com.cooltur.cooltur**
+  - Contiene la clase principal `CoolturApplication` que inicia la aplicación.
+  - Contiene la clase de prueba `CoolturApplicationTests` que verifica el contexto de la aplicación.
 
-4. Parámetros: 
-- Nombre del usuario
-- Texto escrito por el usuario
+- **com.cooltur.cooltur.controller**
+  - Contiene `ChatController`, que maneja las solicitudes de chat.
 
-5. Parámetros:
+- **com.cooltur.cooltur.domain.chat**
+  - Define las clases relacionadas con el dominio del chat, como `Chat`, `ChatBody`, `ChatRespuesta`, y `ChatReturn`.
+
+## Funcionalidades
+
+- **Recibir Solicitudes de Chat**: Permite a los usuarios enviar mensajes al servicio.
+- **Generar Respuestas**: Utiliza un modelo de inteligencia artificial generativa para crear respuestas contextuales.
+
+## Instalación
+
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/tu_usuario/cooltur.git
+   cd cooltur
+Asegúrate de tener instalado Java y Maven.
+
+2. Compila y ejecuta la aplicación:
+   ```bash
+   mvn spring-boot:run
+
+
+Uso
+El microservicio expone un endpoint REST para interactuar con el chat:
+
+Endpoint: POST /chat
+Cuerpo de la Solicitud:
+
+json
+{
+    "mensaje": "Tu mensaje aquí"
+}
+Respuesta:
+
+json
+{
+    "respuesta": "Respuesta generada por la IA"
+}
+
+Contribuciones
+Las contribuciones son bienvenidas. Si deseas contribuir, por favor abre un issue o envía un pull request.
+
+Licencia
+Este proyecto está licenciado bajo la MIT License.
+
+
+
+
+
