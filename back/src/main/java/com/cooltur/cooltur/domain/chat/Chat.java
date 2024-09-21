@@ -26,7 +26,7 @@ public class Chat {
         return askGPT(chatBody);
     }
 
-    private void validate(ChatBody chatBody) {
+    private void validate(ChatB./ody chatBody) {
         String input = chatBody.body().toLowerCase(Locale.ROOT);
 
         List<String> lista =  Arrays.asList(
@@ -41,7 +41,7 @@ public class Chat {
         }
         searchBuilder.append(")");
         String regex = "\\b" + searchBuilder + "\\b";
-        System.out.printf("Hello and welcome!");
+        //System.out.printf("Hello and welcome!");
 
         Pattern pattern  =  Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import "./ChatBox.css"
 
 const ChatBox = () => {
   const [inputMessage, setInputMessage] = useState(''); // Estado para el mensaje de entrada
