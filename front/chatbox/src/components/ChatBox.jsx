@@ -24,7 +24,16 @@ const ChatBox = () => {
     const fetchData = async () => {
       if (debouncedInput.trim()) {
         try {
-          const response = await fetch(`http://localhost:1212/chat`);
+          const response = await fetch('http://localhost:1212/chat', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              user_name: "ANdY",
+              prompt: inputMessage,
+            }),
+          });
           const data = await response.json();
           setApiResponse(data); // Guardar la respuesta en el estado
         } catch (error) {
@@ -46,15 +55,15 @@ const ChatBox = () => {
         {apiResponse && (
           <div className="api-response">
             <h4>Resultados de la API:</h4>
-            <pre>{JSON.stringify(apiResponse, null, 2)}</pre>
+            <pre>{apiResponse.message}</pre>
           </div>
         )}
         
         {/* Mostrar mensaje de error personalizado */}
-        {errorMessage && (
+        {apiResponse != null && 'error' in apiResponse && (
           <div className="error-message">
             <h4>Error:</h4>
-            <p>{errorMessage}</p>
+            <p>{apiResponse.error}</p>
           </div>
         )}
       </div>

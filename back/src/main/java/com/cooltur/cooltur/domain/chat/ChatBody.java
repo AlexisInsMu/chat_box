@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public record ChatBody (
         @NotBlank
+        @JsonProperty("prompt")
         String body,
         @NotBlank
         @JsonProperty("user_name")

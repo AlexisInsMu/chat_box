@@ -30,18 +30,21 @@ public class Chat {
         String input = chatBody.body().toLowerCase(Locale.ROOT);
 
         List<String> lista =  Arrays.asList(
-                "Tu\\s*puta\\s*madre","Hijo\\s*de\\s*puta","Hijo\\s*de\\s*perra","Puta","Zorra","Vete\\s*al\\s*(diablo|demonio)","Que\\s*te\\s*jodan","Lameculos");
+                "Tu\\s*puta\\s*madre","Hijo\\s*de\\s*puta","Hijo\\s*de\\s*perra","Put(a|o)","Zorra","Vete\\s*al\\s*(diablo|demonio|verga)","Que\\s*te\\s*jodan","Lameculos");
         List<String> palabrasEnMinusculas = lista.stream()
                 .map(String::toLowerCase)
                 .toList();
         StringBuilder searchBuilder = new StringBuilder("(");
         for(int i = 0;i  < palabrasEnMinusculas.size() ; i++){
-            if(i ==  palabrasEnMinusculas.size()-1) searchBuilder.append(palabrasEnMinusculas.get(i));
+            if(i ==  palabrasEnMinusculas.size() - 1) searchBuilder.append(palabrasEnMinusculas.get(i));
             else searchBuilder.append(palabrasEnMinusculas.get(i)).append("|");
         }
         searchBuilder.append(")");
         String regex = "\\b" + searchBuilder + "\\b";
+<<<<<<< HEAD
         //System.out.printf("Hello and welcome!");
+=======
+>>>>>>> refs/remotes/origin/main
 
         Pattern pattern  =  Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
@@ -60,12 +63,13 @@ public class Chat {
             String apiKey = chatGPT.getChatGPTAPI();
 
             MediaType mediaType = MediaType.parse("application/json");
+            String language = "spanish";
             RequestBody body = RequestBody.create(mediaType,
                     "{" +
                             "\"model\": \"gpt-3.5-turbo\"," +
                             "\"messages\": [" +
                             "{" +
-                            "\"role\": \"system\", \"content\": \"You are a specialist in Mexican Culture, named CoolBot, you always like to say your name everytime you answer any question, also you like short answers so when you answer me you dont use more than 45 tokens, you are answering me, my name is " + user + " make an unique experience for me in your message.\"" +
+                            "\"role\": \"system\", \"content\": \"You are a specialist in Mexican Culture, named CoolBot, you always like to say your name everytime you answer any question, also you like short answers so when you answer me you dont use more than 75 tokens, you are answering me, my name is " + user + " make an unique experience for me in your message. You must answer in this language" + language + "\"" +
                             "}," +
                             "{" +
                             "\"role\": \"user\", \"content\": \"" + prompt + "\"" +
