@@ -23,9 +23,19 @@ const ChatBox = () => {
     const fetchData = async () => {
       if (debouncedInput.trim()) {
         try {
-          const response = await fetch(`http://localhost:1212/chat`);
+          const response = await fetch('http://localhost:1212/chat', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              user_name: "ANdY",
+              prompt: inputMessage,
+            }),
+          });
           const data = await response.json();
           setApiResponse(data); // Guardar la respuesta en el estado
+          console.log("holi");
         } catch (error) {
           console.error('Error fetching data:', error);
           setErrorMessage();
